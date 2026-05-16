@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "wouter";
 import { 
-  useGetUpcomingEvents, 
+  useListEvents,
   useGetEventsSummary, 
   useListCourses,
   useSyncClassroom,
-  getGetUpcomingEventsQueryKey,
   getGetEventsSummaryQueryKey,
   getListEventsQueryKey,
   getListCoursesQueryKey
@@ -23,9 +22,10 @@ export default function Dashboard() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: upcomingEvents, isLoading: loadingEvents } = useGetUpcomingEvents({
-    query: { queryKey: getGetUpcomingEventsQueryKey() }
+  const { data: allEvents, isLoading: loadingEvents } = useListEvents({
+    query: { queryKey: getListEventsQueryKey() }
   });
+  const recentEvents = allEvents?.slice(0, 6) ?? [];
   
   const { data: summary, isLoading: loadingSummary } = useGetEventsSummary({
     query: { queryKey: getGetEventsSummaryQueryKey() }
@@ -44,7 +44,6 @@ export default function Dashboard() {
           title: "Sync Complete",
           description: `Processed ${result.coursesProcessed} courses, found ${result.announcementsFound} announcements, extracted ${result.eventsExtracted} events.`,
         });
-        queryClient.invalidateQueries({ queryKey: getGetUpcomingEventsQueryKey() });
         queryClient.invalidateQueries({ queryKey: getGetEventsSummaryQueryKey() });
         queryClient.invalidateQueries({ queryKey: getListEventsQueryKey() });
       },
@@ -119,16 +118,16 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold tracking-tight flex items-center gap-2">
               <AlertCircle size={20} className="text-orange-500" />
-              Upcoming in 14 Days
+              Recent Events
             </h2>
             <Link href="/events" className="text-sm font-medium text-primary hover:underline flex items-center gap-1">
               View all <ArrowRight size={14} />
             </Link>
           </div>
 
-          {upcomingEvents && upcomingEvents.length > 0 ? (
+          {recentEvents.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {upcomingEvents.map((event) => (
+              {recentEvents.map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}
             </div>
