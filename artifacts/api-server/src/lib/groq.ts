@@ -41,7 +41,7 @@ ${text}`;
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "llama3-70b-8192",
+        model: "llama-3.3-70b-versatile",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.1,
         max_tokens: 150,
@@ -49,7 +49,8 @@ ${text}`;
     });
 
     if (!response.ok) {
-      logger.error({ status: response.status }, "Groq API error");
+      const body = await response.text();
+      logger.error({ status: response.status, body }, "Groq API error");
       return null;
     }
 
