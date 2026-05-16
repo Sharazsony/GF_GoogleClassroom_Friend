@@ -32,3 +32,13 @@ export const SCOPES = [
   "https://www.googleapis.com/auth/classroom.announcements.readonly",
   "https://www.googleapis.com/auth/calendar.events",
 ];
+
+// Minimal scopes for initial login — avoids Classroom scopes that
+// can trigger stricter Google verification checks for personal Gmail accounts
+export const LOGIN_SCOPES = [
+  "https://www.googleapis.com/auth/userinfo.email",
+  "https://www.googleapis.com/auth/userinfo.profile",
+  "https://www.googleapis.com/auth/calendar.events",
+  "https://www.googleapis.com/auth/classroom.courses.readonly",
+  "https://www.googleapis.com/auth/classroom.announcements.readonly",
+];
