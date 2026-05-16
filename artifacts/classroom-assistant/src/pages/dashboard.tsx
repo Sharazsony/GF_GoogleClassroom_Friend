@@ -15,7 +15,7 @@ import { EventCard } from "@/components/shared/EventCard";
 import { EventTypeBadge } from "@/components/shared/EventTypeBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Loader2, RefreshCw, AlertCircle, Book, ArrowRight } from "lucide-react";
+import { Loader2, RefreshCw, AlertCircle, Book, ArrowRight, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
 
